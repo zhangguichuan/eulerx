@@ -1,2 +1,2 @@
 # eulerx
-data_structure,leetcode,euler plan,sth.
+data structure,leetcode,euler plan,design pattern,sth.
