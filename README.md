@@ -1,2 +1,2 @@
 # Eulerx
-data structure,leetcode,euler plan,design pattern,sth.
+data structure,leetcode,euler plan,design pattern,sth. in rust code
