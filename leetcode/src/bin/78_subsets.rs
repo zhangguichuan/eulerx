@@ -10,9 +10,28 @@
  */
 //1. 递归的dfs写法
 //2. 二进制枚举的方式: 使用二进制枚举的方式，真是非常方便，利用整数和二进制的关系提取字符串中的字符
+//思考：只有两种状态的序列都可以使用类似的方法
 struct Solution;
 impl Solution {
+
     pub fn subsets(nums: Vec<i32>) -> Vec<Vec<i32>> {
+        let n = nums.len();
+        let setn = 1<<n; //2^n
+        let mut ret = vec![];
+        for i in 0..setn {
+            let mut set = vec![];
+            for k in 0..n {
+                let is_choose = (i >> k) & 0x1;
+                if is_choose == 1 {
+                    set.push(nums[k]);
+                }
+            }
+            ret.push(set);
+        }
+        //println!("{:?}", ret);
+        ret
+    }
+    pub fn subsets2(nums: Vec<i32>) -> Vec<Vec<i32>> {
         let mut ret: Vec<Vec<i32>> = vec![]; 
         //let dfs = |nums: &Vec<i32>, cur: usize, set: Vec<i32>| {
         //}
