@@ -22,6 +22,7 @@ impl Solution {
         println!("{:?}", presum);
         let mut map = std::collections::HashMap::<i32, usize>::new();
         map.insert(0,1);
+        //let mut hmap = HashMap::from([(0, 1)]);
         for i in 1..=nums.len() {
             if map.contains_key(&(presum[i] - k)) {
                 ans += *map.get(&(presum[i] - k)).unwrap();

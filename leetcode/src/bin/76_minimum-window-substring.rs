@@ -22,6 +22,44 @@ impl Solution {
             }
             return true;
         };
+
+        for c in t.as_bytes() {
+            tcnt[*c as usize] += 1;
+        }
+
+        let (mut min_w, mut left, mut right) = (s.len(), 0, 0);
+        let (mut l, mut r) = (0, 0);
+        //let s_arr = s.chars().collect::<Vec<_>>();
+        let s_arr = s.as_bytes();
+
+        for r in 0..s.len() {
+            let r_p = s_arr[r] as usize;
+            scnt[r_p] += 1;
+            while is_contain(&scnt, &tcnt) {
+                if r - l < min_w {
+                    min_w = r - l;
+                    left = l;
+                    right = r + 1;
+                }
+                let l_p = s_arr[l] as usize;
+                scnt[l_p] -= 1;
+                l += 1;
+            }
+        }
+
+        s[left..right].to_string()
+    }
+
+    pub fn min_window2(s: String, t: String) -> String {
+        let (mut scnt, mut tcnt) = ([0; 128].to_vec(), [0; 128].to_vec());
+        let is_contain = |scnt: &Vec<i32>, tcnt: &Vec<i32>| -> bool {
+            for i in 0..scnt.len() {
+                if scnt[i] < tcnt[i] {
+                    return false;
+                }
+            }
+            return true;
+        };
         let slen = s.len();
         let tlen = t.len();
 
@@ -36,7 +74,6 @@ impl Solution {
         while r < slen {
             let r_p = s.chars().nth(r).unwrap() as usize;
             scnt[r_p] += 1;
-            r += 1;
             while is_contain(&scnt, &tcnt) {
                 if r - l < min_w {
                     min_w = r - l;
@@ -47,9 +84,10 @@ impl Solution {
                 scnt[l_p] -= 1;
                 l += 1;
             }
+            r += 1;
         }
 
-        s[left..right].to_string()
+        s[left..right+1].to_string()
     }
 }
 
@@ -59,4 +97,10 @@ pub fn main() {
     let min_s = Solution::min_window(s, t);
     println!("{}", min_s);
     assert_eq!("BANC", min_s);
+
+    let s = "a".to_string();
+    let t = "aa".to_string();
+    let min_s = Solution::min_window(s, t);
+    println!("{}", min_s);
+    assert_eq!("", min_s);
 }
