@@ -15,42 +15,36 @@ impl Solution {
         if mat.len() == 0 {
             return vec![];
         }
+        let mut ans = vec![];
         let (m, n) = (mat.len() as i32, mat[0].len() as i32);
         let (mut up, mut dw, mut lt, mut rt) = (0, m-1, 0, n-1);
-        let mut ans = vec![];
-        while (ans.len() as i32) < m*n {
+        while true {
             //println!("{w},{h},{r},{c},direction: {up},{dw},{lt},{rt}");
-            for k in lt..rt {
-                ans.push(mat[up][k]);
+            for k in lt..=rt {
+                ans.push(mat[up as usize][k as usize]);
             }
             up+=1;
             if up > dw { break; }
 
-            for k in up..dw {
-                ans.push(mat[k][rt]);
+            for k in up..=dw {
+                ans.push(mat[k as usize][rt as usize]);
             }
             rt-=1;
-            if up > dw { break; }
+            if lt > rt { break; }
 
-            if lt > rt || up > dw {
-                break;
-            }
-
-            for k in 0..w {
-                ans.push(mat[r][c]);
-                c-=1;
+            for k in (lt..=rt).rev() {
+                ans.push(mat[dw as usize][k as usize]);
             }
             dw-=1;
+            if up > dw { break; }
 
-            for k in 0..h {
-                ans.push(mat[r][c]);
-                r-=1;
+            for k in (up..=dw).rev() {
+                ans.push(mat[k as usize][lt as usize]);
             }
             lt+=1;
-            println!("{w},{h},{r},{c},direction: {up},{dw},{lt},{rt}");
-            if lt > rt || up > dw {
-                break;
-            }
+            if lt > rt { break; }
+
+            //println!("{w},{h},{r},{c},direction: {up},{dw},{lt},{rt}");
         }
         ans
     }
