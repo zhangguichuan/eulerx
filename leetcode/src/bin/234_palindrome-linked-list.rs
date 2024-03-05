@@ -28,10 +28,18 @@ struct Solution;
 impl Solution {
     pub fn is_palindrome(head: Option<Box<ListNode>>) -> bool {
 
+        true
     }
 }
 
 pub fn main() {
-    
+    //输入：head = [1,2,2,1]
+    let mut head = Box::new(ListNode::new(1));
+    head.next = Some(Box::new(ListNode::new(2)));
+    head.next.as_mut().unwrap().next = Some(Box::new(ListNode::new(2)));
+    head.next.as_mut().unwrap().next.as_mut().unwrap().next = Some(Box::new(ListNode::new(1)));
+    println!("{:?}", head);
+    let ans = Solution::is_palindrome(Some(head));
+    println!("ans: {:?}", ans);
 }
 
