@@ -19,6 +19,17 @@
 struct Solution;
 impl Solution {
     pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+        let mut map = std::collections::HashMap::<i32, usize>::new();
+        let mut ans = vec![];
+        for (i, v) in nums.into_iter().enumerate() {
+            if map.contains_key(&(target - v)) {
+                ans.push(*map.get(&(target-v)).unwrap() as i32);
+                ans.push(i as i32);
+                return ans;
+            }
+            map.insert(v, i);
+        }
+        ans
     }
 
 
