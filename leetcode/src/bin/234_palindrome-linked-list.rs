@@ -26,8 +26,26 @@ impl ListNode {
 
 struct Solution;
 impl Solution {
-    pub fn is_palindrome(head: Option<Box<ListNode>>) -> bool {
-
+    pub fn is_palindrome(mut head: Option<Box<ListNode>>) -> bool {
+        if head == None || head.as_ref().unwrap().next == None {
+            return true;
+        }
+        let mut deque: std::collections::VecDeque<i32> = std::collections::VecDeque::new();
+        while head != None {
+            let mut tmp = head.take().unwrap();
+            deque.push_back(tmp.val);
+            head = tmp.next.take();
+        }
+        while !deque.is_empty() {
+            let f = deque.pop_front();
+            let b = deque.pop_back();
+            if f == None || b == None {
+                return true;
+            }
+            if f != b {
+                return false;
+            }
+        }
         true
     }
 }
@@ -38,6 +56,21 @@ pub fn main() {
     head.next = Some(Box::new(ListNode::new(2)));
     head.next.as_mut().unwrap().next = Some(Box::new(ListNode::new(2)));
     head.next.as_mut().unwrap().next.as_mut().unwrap().next = Some(Box::new(ListNode::new(1)));
+    println!("{:?}", head);
+    let ans = Solution::is_palindrome(Some(head));
+    println!("ans: {:?}", ans);
+
+    //输入：head = [1,2,2,3]
+    let mut head = Box::new(ListNode::new(1));
+    head.next = Some(Box::new(ListNode::new(2)));
+    head.next.as_mut().unwrap().next = Some(Box::new(ListNode::new(2)));
+    head.next.as_mut().unwrap().next.as_mut().unwrap().next = Some(Box::new(ListNode::new(3)));
+    println!("{:?}", head);
+    let ans = Solution::is_palindrome(Some(head));
+    println!("ans: {:?}", ans);
+
+    //输入：head = [1,2,1]
+    let mut head = Box::new(ListNode::new(1));
     println!("{:?}", head);
     let ans = Solution::is_palindrome(Some(head));
     println!("ans: {:?}", ans);
